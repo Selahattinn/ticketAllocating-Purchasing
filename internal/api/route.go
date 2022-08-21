@@ -1,8 +1,9 @@
 package api
 
 import (
-	"github.com/Selahattinn/ticketAllocating-Purchasing/internal/api/handler"
 	"github.com/gofiber/fiber/v2"
+
+	"github.com/Selahattinn/ticketAllocating-Purchasing/internal/api/handler"
 )
 
 type RouteContext struct {

@@ -1,11 +1,13 @@
 package main
 
 import (
+	"os"
+
+	"github.com/sirupsen/logrus"
+
 	"github.com/Selahattinn/ticketAllocating-Purchasing/configs"
 	"github.com/Selahattinn/ticketAllocating-Purchasing/pkg/logging"
 	"github.com/Selahattinn/ticketAllocating-Purchasing/pkg/viperconfig"
-	"github.com/sirupsen/logrus"
-	"os"
 )
 
 func boot(logger *logrus.Logger) (*application, error) {

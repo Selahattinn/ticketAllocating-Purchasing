@@ -13,21 +13,8 @@ import (
 )
 
 var excludedPaths = []string{
-	"/v1/search/charge-points",
-	"/v1/search/gas-stations",
-	"/v1/search/car-wash",
-	"/v1/search/park-places",
-	"/v1/search/service-area",
-	"/v1/search/state",
-	"/v1/agreements/pre-information",
-	"/v1/agreements/distance-car-rental",
-	"/v1/rents/pricing",
-	"/v1/rents/cancel-reasons",
-	"/v1/rents/cleaning-labels",
-	"/v1/vehicles/search",
-	"/v1/vehicles",
-	"/v1/vehicles/price-rules",
-	"/v1/faq",
+	"/v1",
+	"/v1/",
 }
 
 func LoggerMiddleware(l *logrus.Logger) func(c *fiber.Ctx) error {

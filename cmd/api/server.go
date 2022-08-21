@@ -1,14 +1,15 @@
 package main
 
 import (
+	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/requestid"
+	"github.com/sirupsen/logrus"
+
 	di "github.com/Selahattinn/ticketAllocating-Purchasing"
 	"github.com/Selahattinn/ticketAllocating-Purchasing/internal/api"
 	"github.com/Selahattinn/ticketAllocating-Purchasing/internal/api/middleware"
 	"github.com/Selahattinn/ticketAllocating-Purchasing/pkg/utils"
 	"github.com/Selahattinn/ticketAllocating-Purchasing/pkg/validation"
-	"github.com/gofiber/fiber/v2"
-	"github.com/gofiber/fiber/v2/middleware/requestid"
-	"github.com/sirupsen/logrus"
 )
 
 const (

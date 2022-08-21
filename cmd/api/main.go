@@ -2,12 +2,13 @@ package main
 
 import (
 	"fmt"
-	"github.com/Selahattinn/ticketAllocating-Purchasing/configs"
-	"github.com/Selahattinn/ticketAllocating-Purchasing/pkg/healthcheck"
 	"log"
 	"os"
 	"os/signal"
 	"syscall"
+
+	"github.com/Selahattinn/ticketAllocating-Purchasing/configs"
+	"github.com/Selahattinn/ticketAllocating-Purchasing/pkg/healthcheck"
 )
 
 func main() {

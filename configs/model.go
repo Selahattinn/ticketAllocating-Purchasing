@@ -1,12 +1,7 @@
 package configs
 
-import (
-	"golang.org/x/text/language"
-)
-
 type Credentials struct {
-	AppID  string `mapstructure:"APP_ID"`
-	Secret string `mapstructure:"APP_SECRET"`
+	AppID string `mapstructure:"APP_ID"`
 }
 
 type WebConfig struct {
@@ -17,10 +12,7 @@ type WebConfig struct {
 
 type PostgreSQLConfig struct {
 	URL      string `mapstructure:"POSTGRESQL_URL"`
-	Database string `mapstructure:"POSTGRESQL_DATABASE"`
-}
-
-type LanguageConfig struct {
-	Default   language.Tag `mapstructure:"LANGUAGE_DEFAULT"`
-	Languages []language.Tag
+	User     string `mapstructure:"POSTGRES_USER"`
+	Password string `mapstructure:"POSTGRES_PASSWORD"`
+	Database string `mapstructure:"POSTGRES_DB"`
 }
