@@ -1,0 +1,37 @@
+version: '3.7'
+services:
+  web-ticket:
+    build:
+      context: .
+      dockerfile: deployments/api/dev/Dockerfile
+    container_name: web-ticket
+    depends_on:
+      - postgresql-ticket
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./:/app
+      - go-modules-volume:/go/pkg/mod
+    networks:
+      - network-ticket
+
+  postgresql-ticket:
+    image: postgres:latest
+    container_name: postgresql-ticket
+    restart: unless-stopped
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgresql-volume:/var/lib/postgresql/data/
+    networks:
+      - network-ticket
+    env_file:
+      - .env.ticket
+
+networks:
+  network-ticket:
+    driver: bridge
+
+volumes:
+  postgresql-volume:
+  go-modules-volume:
