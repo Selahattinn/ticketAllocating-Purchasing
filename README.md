@@ -1,5 +1,5 @@
 # ticketAllocating-Purchasing
-
+before runs test should run docker-compose up
 ## Prerequisites
 go 1.18
 
