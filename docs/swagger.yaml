@@ -1,0 +1,186 @@
+definitions:
+  request.CreateTicketRequest:
+    properties:
+      allocation:
+        type: integer
+      desc:
+        type: string
+      name:
+        type: string
+    required:
+    - allocation
+    - desc
+    - name
+    type: object
+  request.PurchaseTicketRequest:
+    properties:
+      quantity:
+        type: integer
+      user_id:
+        type: string
+    required:
+    - quantity
+    - user_id
+    type: object
+  resource.CreateTicketResource:
+    properties:
+      allocation:
+        type: integer
+      desc:
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
+    type: object
+  resource.GetTicketResource:
+    properties:
+      allocation:
+        type: integer
+      desc:
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
+    type: object
+  response.ErrorAttribute:
+    properties:
+      message:
+        type: string
+      name:
+        type: string
+    type: object
+  response.ErrorSchema:
+    properties:
+      code:
+        type: string
+      message:
+        type: string
+    type: object
+  response.HTTPErrorResponse:
+    properties:
+      error:
+        $ref: '#/definitions/response.ErrorSchema'
+    type: object
+  response.HTTPSuccessResponse:
+    properties:
+      data: {}
+    type: object
+  response.HTTPValidationErrorResponse:
+    properties:
+      attributes:
+        items:
+          $ref: '#/definitions/response.ErrorAttribute'
+        type: array
+      error:
+        $ref: '#/definitions/response.ErrorSchema'
+    type: object
+info:
+  contact: {}
+paths:
+  /v1/ticket/{id}:
+    get:
+      consumes:
+      - application/json
+      description: get a ticket
+      operationId: api.ticket.get
+      parameters:
+      - description: ticket id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.HTTPSuccessResponse'
+            - properties:
+                data:
+                  $ref: '#/definitions/resource.GetTicketResource'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.HTTPErrorResponse'
+        "422":
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/response.HTTPValidationErrorResponse'
+      tags:
+      - api.ticket
+  /v1/ticket_options:
+    post:
+      consumes:
+      - application/json
+      description: creates a ticket
+      operationId: api.ticket.create
+      parameters:
+      - description: ticket creating requirements
+        in: body
+        name: ticket
+        required: true
+        schema:
+          $ref: '#/definitions/request.CreateTicketRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.HTTPSuccessResponse'
+            - properties:
+                data:
+                  $ref: '#/definitions/resource.CreateTicketResource'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.HTTPErrorResponse'
+        "422":
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/response.HTTPValidationErrorResponse'
+      tags:
+      - api.ticket
+  /v1/ticket_options/{id}:
+    post:
+      consumes:
+      - application/json
+      description: purchase a ticket
+      operationId: api.ticket.purchase
+      parameters:
+      - description: ticket id
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: purchase ticket requirements
+        in: body
+        name: ticket
+        required: true
+        schema:
+          $ref: '#/definitions/request.PurchaseTicketRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.HTTPErrorResponse'
+        "422":
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/response.HTTPValidationErrorResponse'
+      tags:
+      - api.ticket
+swagger: "2.0"
