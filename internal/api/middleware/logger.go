@@ -1,6 +1,7 @@
 package middleware
 
 import (
+	"context"
 	"encoding/json"
 	"fmt"
 	"time"
@@ -19,6 +20,12 @@ var excludedPaths = []string{
 
 func LoggerMiddleware(l *logrus.Logger) func(c *fiber.Ctx) error {
 	return func(c *fiber.Ctx) (err error) {
+		c.Locals(
+			utils.ContextKey, context.WithValue(
+				c.Context(), utils.RequestIDKey, c.Locals(utils.RequestIDKey), //nolint:staticcheck
+			),
+		)
+
 		t := time.Now()
 		err = c.Next()
 

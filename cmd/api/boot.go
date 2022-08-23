@@ -7,12 +7,19 @@ import (
 
 	"github.com/Selahattinn/ticketAllocating-Purchasing/configs"
 	"github.com/Selahattinn/ticketAllocating-Purchasing/pkg/logging"
+	"github.com/Selahattinn/ticketAllocating-Purchasing/pkg/mysql"
 	"github.com/Selahattinn/ticketAllocating-Purchasing/pkg/viperconfig"
 )
 
 func boot(logger *logrus.Logger) (*application, error) {
+	postgresInstance, postgresErr := initMysql()
+	if postgresErr != nil {
+		return nil, postgresErr
+	}
+
 	return &application{
-		logger: logger,
+		logger:          logger,
+		postgreInstance: postgresInstance,
 	}, nil
 }
 
@@ -50,5 +57,11 @@ func initLogger() *logrus.Logger {
 			Env:     configs.TicketApp.Web.Env,
 			AppName: configs.TicketApp.Web.AppName,
 		},
+	})
+}
+
+func initMysql() (mysql.IMysqlInstance, error) {
+	return mysql.InitMysql(mysql.Config{
+		URL: configs.TicketApp.Mysql.URL,
 	})
 }

@@ -6,7 +6,7 @@ services:
       dockerfile: deployments/api/dev/Dockerfile
     container_name: web-ticket
     depends_on:
-      - postgresql-ticket
+      - mysql-ticket
     ports:
       - "8000:8000"
     volumes:
@@ -15,23 +15,27 @@ services:
     networks:
       - network-ticket
 
-  postgresql-ticket:
-    image: postgres:latest
-    container_name: postgresql-ticket
+  mysql-ticket:
+    image: mysql:latest
+    container_name: mysql-ticket
     restart: unless-stopped
+    environment:
+      - MYSQL_ROOT_PASSWORD=S3cret
+      - MYSQL_PASSWORD=admin
+      - MYSQL_USER=admin
+      - MYSQL_DATABASE=ticket
     ports:
-      - "5432:5432"
+      - "3306:3306"
     volumes:
-      - postgresql-volume:/var/lib/postgresql/data/
+      - mysql-volume:/var/lib/mysql/
+      - ./mysql-dump:/docker-entrypoint-initdb.d
     networks:
       - network-ticket
-    env_file:
-      - .env.ticket
 
 networks:
   network-ticket:
     driver: bridge
 
 volumes:
-  postgresql-volume:
+  mysql-volume:
   go-modules-volume:

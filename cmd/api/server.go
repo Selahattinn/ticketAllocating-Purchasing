@@ -1,6 +1,7 @@
 package main
 
 import (
+	"github.com/Selahattinn/ticketAllocating-Purchasing/pkg/mysql"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/requestid"
 	"github.com/sirupsen/logrus"
@@ -17,7 +18,8 @@ const (
 )
 
 type application struct {
-	logger *logrus.Logger
+	logger          *logrus.Logger
+	postgreInstance mysql.IMysqlInstance
 }
 
 func initApplication(a *application) *fiber.App {
@@ -31,6 +33,7 @@ func initApplication(a *application) *fiber.App {
 
 	route := di.InitRoute(
 		a.logger,
+		a.postgreInstance,
 	)
 	route.SetupRoutes(&api.RouteContext{
 		App: app,

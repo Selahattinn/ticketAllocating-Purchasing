@@ -1,8 +1,8 @@
 package configs
 
-type Credentials struct {
-	AppID string `mapstructure:"APP_ID"`
-}
+const (
+	productionEnv = "production"
+)
 
 type WebConfig struct {
 	AppName string `mapstructure:"APP_NAME"`
@@ -10,9 +10,10 @@ type WebConfig struct {
 	Env     string `mapstructure:"ENV"`
 }
 
-type PostgreSQLConfig struct {
-	URL      string `mapstructure:"POSTGRESQL_URL"`
-	User     string `mapstructure:"POSTGRES_USER"`
-	Password string `mapstructure:"POSTGRES_PASSWORD"`
-	Database string `mapstructure:"POSTGRES_DB"`
+type MysqlConfig struct {
+	URL string `mapstructure:"MYSQL_URL"`
+}
+
+func (wc WebConfig) IsProductionEnv() bool {
+	return wc.Env == productionEnv
 }
